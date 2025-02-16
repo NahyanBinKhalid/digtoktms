@@ -31,8 +31,8 @@ Route::prefix('v1')->group(function () {
         // Translations
         Route::get('translations', [TranslationsController::class, 'index'])->name('api.v1.translations.index');
         Route::post('translations', [TranslationsController::class, 'store'])->name('api.v1.translations.store');
-        Route::get('translations/{uuid}', [TranslationsController::class, 'show'])->name('api.v1.translations.show');
-        Route::put('translations/{uuid}', [TranslationsController::class, 'update'])->name('api.v1.translations.update');
-        Route::delete('translations/{uuid}', [TranslationsController::class, 'destroy'])->name('api.v1.translations.destroy');
+        Route::get('translations/{id}', [TranslationsController::class, 'show'])->name('api.v1.translations.show');
+        Route::put('translations/{id}', [TranslationsController::class, 'update'])->name('api.v1.translations.update');
+        Route::delete('translations/{id}', [TranslationsController::class, 'destroy'])->name('api.v1.translations.destroy');
     });
 });

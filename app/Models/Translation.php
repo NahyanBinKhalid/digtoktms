@@ -25,12 +25,8 @@ class Translation extends Model
         'deleted_at'
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'tags' => 'array'
-    ];
+    public function setTagsAttribute($value)
+    {
+        $this->attributes['tags'] = json_decode($value);
+    }
 }

@@ -29,7 +29,7 @@ class UserRequest extends FormRequest
             $userId = $this->route('user');
             return [
                 'name'          =>  'required|string',
-                'email'         =>  ['required', 'email', 'string', Rule::unique('users')->ignore($userId, 'uuid')],
+                'email'         =>  ['required', 'email', 'string', Rule::unique('users')->ignore($userId, 'id')],
                 'password'      =>  'nullable|string|min:6|confirmed'
             ];
         } else {

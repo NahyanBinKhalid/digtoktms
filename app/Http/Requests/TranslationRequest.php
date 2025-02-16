@@ -24,7 +24,7 @@ class TranslationRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = $this->route('translation')?->id ?? null;
+        $id = $this->route()->id ?? null;
 
         return [
             'locale'    => 'required|string|max:3',
@@ -35,7 +35,7 @@ class TranslationRequest extends FormRequest
                 Rule::unique('translations')
                     ->where(fn ($query) => 
                         $query->where('locale', $this->input('locale'))
-                    )->ignore($id)
+                    )->ignore($id, 'id')
             ],
             'content'   => 'required|string',
             'tags'      => 'nullable|array',

@@ -10,11 +10,4 @@ class UserRepository extends BaseRepository implements UserInterface {
     {
         $this->model = $model;
     }
-
-    public function updatePermissions($uuid, $permissions, $roles)
-    {
-        $user = $this->model->where('uuid', $uuid)->first();
-        $user->syncPermissions($permissions);
-        $user->syncRoles($roles);
-    }
 }
