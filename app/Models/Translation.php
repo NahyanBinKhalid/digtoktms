@@ -25,8 +25,13 @@ class Translation extends Model
         'deleted_at'
     ];
 
+    public function getTagsAttribute($value)
+    {
+        return json_decode($value, true);
+    }
+
     public function setTagsAttribute($value)
     {
-        $this->attributes['tags'] = json_decode($value);
+        $this->attributes['tags'] = json_encode($value);
     }
 }

@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -11,23 +13,19 @@ use Illuminate\Support\Str;
  */
 class TranslationFactory extends Factory
 {
-    /**
-     * The current password being used by the factory.
-     */
-    protected static ?string $password;
-
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
+        $locales = ['en', 'fr', 'es', 'ar'];
+
+        static $counter = 1;
+        $baseKey = 'key' . $counter;
+        $counter++;
+
         return [
-            'locale' => $this->faker->randomElement(['en', 'fr', 'es']), // Randomly pick a locale
-            'key' => $this->faker->unique()->word . '.' . $this->faker->word, // Generate a unique key
-            'content' => $this->faker->sentence, // Generate a random sentence as content
-            'tags' => json_encode([$this->faker->word, $this->faker->word])
+            'locale'  => $locale = Arr::random($locales),
+            'key'     => "{$baseKey}.{$locale}",
+            'content' => fake()->sentence(),
+            'tags'    => json_encode(array_values(Arr::random(['web', 'mobile'], rand(1, 2))))
         ];
     }
 }

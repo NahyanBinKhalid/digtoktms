@@ -88,7 +88,7 @@ class TranslationsController extends ApiController
      */
     public function store(TranslationInterface $translation, TranslationRequest $request)
     {
-        $record = $translation->create($request->except('tags') + ['tags' => json_encode($request->tags)]);
+        $record = $translation->create($request->except('_method', '_token'));
         return $this->successResponse($record, 'Translation added successfully');
     }
 
@@ -159,7 +159,7 @@ class TranslationsController extends ApiController
      */
     public function update(TranslationInterface $translation, TranslationRequest $request, string $id)
     {
-        $record = $translation->updateById($id, $request->except('tags') + ['tags' => json_encode($request->tags)]);
+        $record = $translation->updateById($id, $request->except('_method', '_token'));
         return $this->successResponse($record, 'Translation updated successfully');
     }
 

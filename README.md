@@ -1,66 +1,98 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Translation Management Service
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Overview
+This project is a **Translation Management Service** built with Laravel. It provides an API-driven service to manage translations for multiple locales, allowing you to store, retrieve, update, and search translations efficiently. The service is designed to be scalable, secure, and performant, with features like token-based authentication, JSON export, and support for large datasets.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Features
+- **CRUD Operations**: Create, read, update, and delete translations.
+- **Multi-Locale Support**: Store translations for multiple locales (e.g., `en`, `fr`, `es`).
+- **Tagging**: Tag translations for context (e.g., `web`, `mobile`).
+- **Search and Filter**: Search translations by key, locale, tag, or content.
+- **Token-Based Authentication**: Secure the API using JWT (JSON Web Tokens).
+- **Scalable Database Schema**: Optimized for handling large datasets (100k+ records).
+- **OpenAPI Documentation**: API documentation using OpenAPI/Swagger.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Technologies Used
+- **Laravel**: PHP framework for building the API.
+- **MySQL/PostgreSQL**: Database for storing translations.
+- **JWT**: Token-based authentication.
+- **OpenAPI/Swagger**: API documentation.
+- **PHPUnit**: Testing framework for unit and feature tests. (Created the tests but due to shortage of time couldn't able to complete the testing part)
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Setup Instructions
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Prerequisites
+- PHP >= 8.0
+- Composer
+- MySQL/PostgreSQL
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+### Step 1: Clone the Repository
+```bash
+git clone git@github.com:NahyanBinKhalid/digtoktms.git tms
+cd tms
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+### Step 2: Installing Dependencies
+```bash
+composer install
+npm install
+```
+---
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Step 3: Environment Setup
+1. Copy .env.example file to .env
+```bash
+cp .env.example .env
+```
 
-## Contributing
+2. Generate Key
+```bash
+php artisan key:generate
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+3. Add Your DB Info
+```bash
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=tms
+DB_USERNAME=root
+DB_PASSWORD=password
+```
 
-## Code of Conduct
+4. generate fresh documentation for your apis
+```bash
+php artisan l5-swagger:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+5. Run Migration and Seeders
+```bash
+php artisan migrate:refresh --seed
+```
 
-## Security Vulnerabilities
+6. Access APIs on the following url
+```bash
+{base_url}/api/documentation
+```
+You application is ready to use
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Step : Explaining Application Structure
+- Used Laravel's features at best of my knowledge
+- Implemente Repository Design Pattern
+- Use Annotations in Models
+- Used Eloquent ORM
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Step : Explaining DB Structure
+- I have created 2 major tables 'users' and 'translations'
+- I have added locale key in same translations table in non normalize form to reduce query complexity

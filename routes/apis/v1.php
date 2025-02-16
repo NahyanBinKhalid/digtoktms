@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Apis\V1\AuthController;
 use App\Http\Controllers\Apis\V1\TranslationsController;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +17,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('v1')->group(function () {
+    Route::get('/', function () { 
+        return Response::json([
+            'error' => false,
+            'message' => 'API Version 1',
+            'data'  => null
+        ], 200); 
+    })->name('api.v1.index');
+
     Route::post('register', [AuthController::class, 'register'])->name('api.v1.register');
     Route::post('login', [AuthController::class, 'login'])->name('api.v1.login');
     Route::post('forgot', [AuthController::class, 'forgot'])->name('api.v1.forgot');
