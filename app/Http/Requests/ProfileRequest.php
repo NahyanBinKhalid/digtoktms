@@ -16,17 +16,8 @@ class ProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'country_uuid'  =>  'nullable|exists:countries,uuid',
-            'first_name'    =>  'required|string',
-            'last_name'     =>  'required|string',
-            'email'         => ['string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
-            'phone'         => ['string', 'max:20', Rule::unique(User::class)->ignore($this->user()->id)],
-            'avatar'        =>  'sometimes|nullable|string',
-            'document'      =>  'sometimes|nullable|string',
-            'address'       =>  'nullable|string',
-            'post_code'     =>  'nullable|string',
-            'gender'        =>  'nullable|string|in:male,female',
-            'dob'           =>  'nullable|date'
+            'name'    =>  'required|string',
+            'email'   => ['string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)]
         ];
     }
 }

@@ -27,25 +27,16 @@ class AuthRepository extends BaseRepository implements AuthInterface {
         try {
             DB::beginTransaction();
 
-            if (isset($user['country_uuid']) && ! is_null($user['country_uuid'])) {
-                $nationality = Country::where('uuid', $user['country_uuid'])->first();
-                $user['country_id'] = $nationality->id;
-                $user['country_uuid'] = $nationality->uuid;
-            }
-
             $this->model->fill($user)->save();
-            $this->model->assignRole(Role::where('name', $user['role'])->first()->name);
             
-            $newUser = $this->model->with(['nationality', 'roles'])->find($this->model->id);
-            $newUser->token = $newUser->createToken('accessToken')->plainTextToken;
+            $user = $this->model->find($this->model->id);
+            $user->token = $user->createToken('accessToken')->plainTextToken;
             DB::commit();
-
-            Mail::to($newUser->email)->send(new EmployeeRegistration($newUser, $user['password']));
 
             return [
                 'error'     =>  false,
                 'message'   =>  'New User Registered',
-                'data'      =>  $newUser,
+                'data'      =>  $user,
                 'code'      =>  200
             ];
         } catch (\Exception $exception) {
@@ -63,17 +54,8 @@ class AuthRepository extends BaseRepository implements AuthInterface {
     {
         try {
             if (Auth::attempt($credentials)) {
-                $user = $this->model->with(['roles'])->find(Auth::user()->id);
-                $user['token'] = $user->createToken('accessToken')->plainTextToken;
-                // if(is_null($user->email_verified_at))
-                // {
-                //     return [
-                //         'error'     =>  true,
-                //         'message'   =>  'Email not verified. Please verify your email address.',
-                //         'data'      =>  null,
-                //         'code'      =>  401
-                //     ];
-                // }
+                $user = $this->model->find(Auth::user()->id);
+                $user->token = $user->createToken('accessToken')->plainTextToken;
                 
                 return [
                     'error'     =>  false,
@@ -167,18 +149,10 @@ class AuthRepository extends BaseRepository implements AuthInterface {
     public function profile()
     {
         try {
-            $auth = auth()->user();
-            $employee = User::with(['nationality', 'roles', 'employeeJobs'])->where('uuid', $auth->uuid)->first()->toArray();
-            $employee['jobs'] = $employee['employee_jobs'];
-            unset($employee['employee_jobs']);
-            foreach ($employee['jobs'] as $key => $job) {
-                $employee['jobs'][$key]['status'] = Status::where('uuid', $job['pivot']['status_uuid'])->first();
-            }
-            
             return [
                 'error'     =>  false,
                 'message'   =>  'User Profile',
-                'data'      =>  $employee,
+                'data'      =>  auth()->user(),
                 'code'      =>  200
             ];
         } catch (\Exception $exception) {
@@ -195,21 +169,9 @@ class AuthRepository extends BaseRepository implements AuthInterface {
     {
         try {
             $auth = auth()->user();
-            if (isset($data['country_uuid']) && ! is_null($data['country_uuid'])) {
-                $country = Country::where('uuid', 'country_uuid')->first();
-                if (! is_null($country)) {
-                    $data['country_id'] = $country->id;
-                    $data['country_uuid'] = $country->uuid;
-                }
-            }
-            $user = User::with(['nationality', 'roles', 'employeeJobs'])->where('uuid', $auth->uuid)->first();
+            
+            $user = $this->model->where('id', $auth->id)->first();
             $user->fill($data)->save();
-            $user = $user->toArray();
-            $user['jobs'] = $user['employee_jobs'];
-            unset($user['employee_jobs']);
-            foreach ($user['jobs'] as $key => $job) {
-                $user['jobs'][$key]['status'] = Status::where('uuid', $job['pivot']['status_uuid'])->first();
-            }
             
             return [
                 'error'     =>  false,

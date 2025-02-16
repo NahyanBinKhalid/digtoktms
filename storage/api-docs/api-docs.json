@@ -5,14 +5,19 @@
         "description": "Your API Description",
         "contact": {
             "name": "API Support",
-            "email": "me@thenahyan.com"
+            "email": "nahyan.bin.khalid@gmail.com"
         },
         "license": {
             "name": "Nahyan",
-            "url": "me@thenahyan.com"
+            "url": "nahyan.bin.khlid@gmail.com"
         },
         "version": "1.0.0"
     },
+    "servers": [
+        {
+            "url": "http://localhost/tms/public"
+        }
+    ],
     "paths": {
         "/api/v1/register": {
             "post": {
@@ -27,67 +32,28 @@
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "first_name",
-                                    "last_name",
+                                    "name",
                                     "email",
-                                    "phone",
-                                    "role",
                                     "password",
                                     "password_confirmation"
                                 ],
                                 "properties": {
-                                    "country_uuid": {
-                                        "type": "string",
-                                        "example": "valid country uuid"
-                                    },
-                                    "first_name": {
-                                        "type": "string",
-                                        "example": "John"
-                                    },
-                                    "last_name": {
+                                    "name": {
                                         "type": "string",
                                         "example": "Doe"
                                     },
                                     "email": {
                                         "type": "string",
                                         "format": "email",
-                                        "example": "johndoe@example.com"
-                                    },
-                                    "phone": {
-                                        "type": "string",
-                                        "example": "123-456-7890"
-                                    },
-                                    "role": {
-                                        "type": "string",
-                                        "example": "admin || contractor || employee"
-                                    },
-                                    "avatar": {
-                                        "type": "string",
-                                        "example": "users/avatars/1.png"
-                                    },
-                                    "dob": {
-                                        "type": "string",
-                                        "example": "1999-01-01"
-                                    },
-                                    "gender": {
-                                        "type": "string",
-                                        "example": "male"
-                                    },
-                                    "address": {
-                                        "type": "string",
-                                        "example": "Some Address"
-                                    },
-                                    "post_code": {
-                                        "type": "string",
-                                        "example": "BDCG2102"
+                                        "example": "doe@example.com"
                                     },
                                     "password": {
                                         "type": "string",
-                                        "example": "password123"
+                                        "example": "password"
                                     },
                                     "password_confirmation": {
                                         "type": "string",
-                                        "example": "password123"
+                                        "example": "password"
                                     }
                                 },
                                 "type": "object"
@@ -131,11 +97,11 @@
                                     "email": {
                                         "type": "string",
                                         "format": "email",
-                                        "example": "johndoe@example.com"
+                                        "example": "onolan@example.com"
                                     },
                                     "password": {
                                         "type": "string",
-                                        "example": "password123"
+                                        "example": "password"
                                     }
                                 },
                                 "type": "object"
@@ -220,56 +186,18 @@
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "first_name",
-                                    "last_name",
-                                    "email",
-                                    "phone"
+                                    "name",
+                                    "email"
                                 ],
                                 "properties": {
-                                    "country_uuid": {
-                                        "type": "string",
-                                        "example": "valid country uuid"
-                                    },
-                                    "first_name": {
-                                        "type": "string",
-                                        "example": "John"
-                                    },
-                                    "last_name": {
+                                    "name": {
                                         "type": "string",
                                         "example": "Doe"
                                     },
                                     "email": {
                                         "type": "string",
                                         "format": "email",
-                                        "example": "johndoe@example.com"
-                                    },
-                                    "phone": {
-                                        "type": "string",
-                                        "example": "123-456-7890"
-                                    },
-                                    "avatar": {
-                                        "type": "string",
-                                        "example": "users/avatars/1.png"
-                                    },
-                                    "document": {
-                                        "type": "string",
-                                        "example": "users/documents/1.pdf"
-                                    },
-                                    "dob": {
-                                        "type": "string",
-                                        "example": "1999-01-01"
-                                    },
-                                    "gender": {
-                                        "type": "string",
-                                        "example": "male"
-                                    },
-                                    "address": {
-                                        "type": "string",
-                                        "example": "Some Address"
-                                    },
-                                    "post_code": {
-                                        "type": "string",
-                                        "example": "BDCG2102"
+                                        "example": "onolan@example.com"
                                     }
                                 },
                                 "type": "object"
@@ -290,7 +218,12 @@
                     "500": {
                         "description": "Internal Server Error"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/forgot": {
@@ -488,6 +421,286 @@
                     }
                 }
             }
+        },
+        "/api/v1/translations": {
+            "get": {
+                "tags": [
+                    "Translations"
+                ],
+                "summary": "List of Translations",
+                "operationId": "c0961b0a88aa0196c0baab548f6669a1",
+                "parameters": [
+                    {
+                        "name": "locale",
+                        "in": "query",
+                        "description": "Locale code",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "en"
+                        }
+                    },
+                    {
+                        "name": "tag",
+                        "in": "query",
+                        "description": "Tag",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "mobile"
+                        }
+                    },
+                    {
+                        "name": "key",
+                        "in": "query",
+                        "description": "Translation key",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "home.title"
+                        }
+                    },
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Search query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "welcome"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Profile Details"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Translations"
+                ],
+                "summary": "Add a Translation",
+                "operationId": "67bc06bb460f643e572547074c9003dc",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "locale",
+                                    "key",
+                                    "content",
+                                    "tags"
+                                ],
+                                "properties": {
+                                    "locale": {
+                                        "type": "string",
+                                        "example": "en"
+                                    },
+                                    "key": {
+                                        "type": "string",
+                                        "example": "home.title"
+                                    },
+                                    "content": {
+                                        "type": "string",
+                                        "example": "Welcome"
+                                    },
+                                    "tags": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": [
+                                            "mobile",
+                                            "web"
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Translation Added Successfully"
+                    },
+                    "401": {
+                        "description": "Data Incomplete or Invalid"
+                    },
+                    "422": {
+                        "description": "Validation Error"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/translations/{id}": {
+            "get": {
+                "tags": [
+                    "Translations"
+                ],
+                "summary": "Show Translation",
+                "operationId": "1e5f551a06bb3009e67431c5c542843a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Profile Details"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Translations"
+                ],
+                "summary": "Update a Translation",
+                "operationId": "0ae3a6a5011658925866595838434c55",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "locale",
+                                    "key",
+                                    "content",
+                                    "tags"
+                                ],
+                                "properties": {
+                                    "locale": {
+                                        "type": "string",
+                                        "example": "en"
+                                    },
+                                    "key": {
+                                        "type": "string",
+                                        "example": "home.title"
+                                    },
+                                    "content": {
+                                        "type": "string",
+                                        "example": "Welcome"
+                                    },
+                                    "tags": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": [
+                                            "mobile",
+                                            "web"
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User Registered Successfully"
+                    },
+                    "401": {
+                        "description": "Data Incomplete or Invalid"
+                    },
+                    "422": {
+                        "description": "Validation Error"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Translations"
+                ],
+                "summary": "Delete a Translation",
+                "operationId": "a0deb6a75764e8d34cb9cdf87184aa1e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User Registered Successfully"
+                    },
+                    "401": {
+                        "description": "Data Incomplete or Invalid"
+                    },
+                    "422": {
+                        "description": "Validation Error"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -507,6 +720,10 @@
         {
             "name": "Upload",
             "description": "Upload"
+        },
+        {
+            "name": "Translations",
+            "description": "Translations"
         }
     ]
 }

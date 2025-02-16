@@ -26,22 +26,17 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         if ($this->route('user')) {
-            $userUuid = $this->route('user');
+            $userId = $this->route('user');
             return [
-                'first_name'    =>  'required|string',
-                'last_name'     =>  'required|string',
-                'email'         =>  ['required', 'email', 'string', Rule::unique('users')->ignore($userUuid, 'uuid')],
-                'phone'         =>  ['required', 'string', Rule::unique('users')->ignore($userUuid, 'uuid')],
-                'password'      =>  'nullable|string|min:8|confirmed'
+                'name'          =>  'required|string',
+                'email'         =>  ['required', 'email', 'string', Rule::unique('users')->ignore($userId, 'uuid')],
+                'password'      =>  'nullable|string|min:6|confirmed'
             ];
         } else {
             return [    
-                'first_name'    =>  'required|string',
-                'last_name'     =>  'required|string',
+                'name'          =>  'required|string',
                 'email'         =>  'required|email|string|unique:users',
-                'phone'         =>  'required|string|unique:users',
-                'password'      =>  'required|string|min:8|confirmed',
-                'role'          =>  'required|string|in:admin,contractor,employee'
+                'password'      =>  'required|string|min:6|confirmed'
             ];
         }
     }

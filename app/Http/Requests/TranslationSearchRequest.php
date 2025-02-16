@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 
-class ResetRequest extends FormRequest
+class TranslationSearchRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,20 +24,10 @@ class ResetRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'otp'       => 'required|string|exists:users,otp',
-            'password'  => 'required|string|min:6|confirmed',
-        ];
-    }
-
-    /**
-     * Customize the error messages for validation rules.
-     *
-     * @return array
-     */
-    public function messages(): array
-    {
-        return [
-            'otp.exists' => 'The otp not found.',
+            'locale'    => 'nullable|string|max:3',
+            'key'       => 'nullable|string|max:255',
+            'tag'       => 'nullable|string',
+            'content'   => 'nullable|string'
         ];
     }
 

@@ -274,7 +274,7 @@ return [
          */
         'ui' => [
             'display' => [
-                'dark_mode' => env('L5_SWAGGER_UI_DARK_MODE', false),
+                'dark_mode' => env('L5_SWAGGER_UI_DARK_MODE', true),
                 /*
                  * Controls the default expansion setting for the operations and tags. It can be :
                  * 'list' (expands only the tags),
@@ -298,7 +298,7 @@ return [
                 /*
                  * If set to true, it persists authorization data, and it would not be lost on browser close/refresh
                  */
-                'persist_authorization' => env('L5_SWAGGER_UI_PERSIST_AUTHORIZATION', false),
+                'persist_authorization' => env('L5_SWAGGER_UI_PERSIST_AUTHORIZATION', true),
 
                 'oauth2' => [
                     /*

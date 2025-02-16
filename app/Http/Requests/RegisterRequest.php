@@ -24,19 +24,9 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'country_uuid'  =>  'nullable|exists:countries,uuid',
-            'first_name'    =>  'required|string',
-            'last_name'     =>  'required|string',
+            'name'          =>  'required|string',
             'email'         =>  'required|email|string|unique:users',
-            'phone'         =>  'required|string|unique:users',
-            'role'          =>  'sometimes|required|in:admin,contractor,employee',
-            'password'      =>  'required|string|min:8|confirmed',
-            'avatar'        =>  'sometimes|nullable|string',
-            'document'      =>  'sometimes|nullable|string',
-            'address'       =>  'nullable|string',
-            'post_code'     =>  'nullable|string',
-            'gender'        =>  'nullable|string|in:male,female',
-            'dob'           =>  'nullable|date',
+            'password'      =>  'required|string|min:6|confirmed',
         ];
     }
 

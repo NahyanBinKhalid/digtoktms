@@ -5,8 +5,9 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\Rule;
 
-class ResetRequest extends FormRequest
+class TranslationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,23 +24,31 @@ class ResetRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id = $this->route('translation')?->id ?? null;
+
         return [
-            'otp'       => 'required|string|exists:users,otp',
-            'password'  => 'required|string|min:6|confirmed',
+            'locale'    => 'required|string|max:3',
+            'key'       => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('translations')
+                    ->where(fn ($query) => 
+                        $query->where('locale', $this->input('locale'))
+                    )->ignore($id)
+            ],
+            'content'   => 'required|string',
+            'tags'      => 'nullable|array',
+            'tags.*'    => 'required|string|in:web,mobile',
         ];
     }
 
-    /**
-     * Customize the error messages for validation rules.
-     *
-     * @return array
-     */
-    public function messages(): array
+    public function messages()
     {
         return [
-            'otp.exists' => 'The otp not found.',
+            'key.unique' => 'The combination of locale and key must be unique.',
         ];
-    }
+}
 
     public function failedValidation(Validator $validator)
     {

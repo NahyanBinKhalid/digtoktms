@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Apis\V1;
 
 use App\Http\Controllers\Apis\ApiController;
-use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\ForgotRequest;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\RegisterRequest;
@@ -23,20 +23,11 @@ class AuthController extends ApiController
      *         @OA\MediaType(
      *             mediaType="application/json",
      *             @OA\Schema(
-     *                 required={"first_name", "last_name", "email", "phone", "role", "password", "password_confirmation"},
-     *                 @OA\Property(property="country_uuid", type="string", example="valid country uuid"),
-     *                 @OA\Property(property="first_name", type="string", example="John"),
-     *                 @OA\Property(property="last_name", type="string", example="Doe"),
-     *                 @OA\Property(property="email", type="string", format="email", example="johndoe@example.com"),
-     *                 @OA\Property(property="phone", type="string", example="123-456-7890"),
-     *                 @OA\Property(property="role", type="string", example="admin || contractor || employee"),
-     *                 @OA\Property(property="avatar", type="string", example="users/avatars/1.png"),
-     *                 @OA\Property(property="dob", type="string", example="1999-01-01"),
-     *                 @OA\Property(property="gender", type="string", example="male"),
-     *                 @OA\Property(property="address", type="string", example="Some Address"),
-     *                 @OA\Property(property="post_code", type="string", example="BDCG2102"),
-     *                 @OA\Property(property="password", type="string", example="password123"),
-     *                 @OA\Property(property="password_confirmation", type="string", example="password123"),
+     *                 required={"name", "email", "password", "password_confirmation"},
+     *                 @OA\Property(property="name", type="string", example="Doe"),
+     *                 @OA\Property(property="email", type="string", format="email", example="doe@example.com"),
+     *                 @OA\Property(property="password", type="string", example="password"),
+     *                 @OA\Property(property="password_confirmation", type="string", example="password"),
      *             )
      *         )
      *     ),
@@ -63,8 +54,8 @@ class AuthController extends ApiController
      *             mediaType="application/json",
      *             @OA\Schema(
      *                 required={"email", "password"},
-     *                 @OA\Property(property="email", type="string", format="email", example="johndoe@example.com"),
-     *                 @OA\Property(property="password", type="string", example="password123"),
+     *                 @OA\Property(property="email", type="string", format="email", example="onolan@example.com"),
+     *                 @OA\Property(property="password", type="string", example="password"),
      *             )
      *         )
      *     ),
@@ -126,18 +117,9 @@ class AuthController extends ApiController
      *         @OA\MediaType(
      *             mediaType="application/json",
      *             @OA\Schema(
-     *                 required={"first_name", "last_name", "email", "phone"},
-     *                 @OA\Property(property="country_uuid", type="string", example="valid country uuid"),
-     *                 @OA\Property(property="first_name", type="string", example="John"),
-     *                 @OA\Property(property="last_name", type="string", example="Doe"),
-     *                 @OA\Property(property="email", type="string", format="email", example="johndoe@example.com"),
-     *                 @OA\Property(property="phone", type="string", example="123-456-7890"),
-     *                 @OA\Property(property="avatar", type="string", example="users/avatars/1.png"),
-     *                 @OA\Property(property="document", type="string", example="users/documents/1.pdf"),
-     *                 @OA\Property(property="dob", type="string", example="1999-01-01"),
-     *                 @OA\Property(property="gender", type="string", example="male"),
-     *                 @OA\Property(property="address", type="string", example="Some Address"),
-     *                 @OA\Property(property="post_code", type="string", example="BDCG2102")
+     *                 required={"name", "email"},
+     *                 @OA\Property(property="name", type="string", example="Doe"),
+     *                 @OA\Property(property="email", type="string", format="email", example="onolan@example.com")
      *             )
      *         )
      *     ),
@@ -145,6 +127,8 @@ class AuthController extends ApiController
      *     @OA\Response(response=401, description="Data Incomplete or Invalid"),
      *     @OA\Response(response=422, description="Validation Error"),
      *     @OA\Response(response=500, description="Internal Server Error"),
+     * 
+     *     security={{"bearerAuth": {}}}
      * )
      */
     public function update(ProfileRequest $request, AuthInterface $auth)

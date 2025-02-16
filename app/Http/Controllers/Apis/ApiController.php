@@ -13,12 +13,12 @@ class ApiController extends Controller
      *     version="1.0.0",
      *     description="Your API Description",
      *     @OA\Contact(
-     *         email="me@thenahyan.com",
+     *         email="nahyan.bin.khalid@gmail.com",
      *         name="API Support"
      *     ),
      *     @OA\License(
      *         name="Nahyan",
-     *         url="me@thenahyan.com"
+     *         url="nahyan.bin.khlid@gmail.com"
      *     ),
      * ),
      *
