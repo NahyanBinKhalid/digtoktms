@@ -13,11 +13,6 @@
         },
         "version": "1.0.0"
     },
-    "servers": [
-        {
-            "url": "http://localhost/tms/public"
-        }
-    ],
     "paths": {
         "/api/v1/register": {
             "post": {
